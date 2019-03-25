@@ -7,7 +7,8 @@
     <PackageId>CodeCampApi.Orlando</PackageId>
     <Authors>Andy Lech, The Xamarin Files</Authors>
     <Company>The Xamarin Files</Company>
-    <PackageLicenseUrl>https://github.com/xamarinfiles/app-code-camp/blob/develop/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl>https://github.com/xamarinfiles/library-api-code-camp-orlando/blob/release/LICENSE</PackageLicenseUrl>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
