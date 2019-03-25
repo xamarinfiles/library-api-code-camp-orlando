@@ -2,7 +2,6 @@
 using OrlandoCodeCampApi.Models.Responses;
 using Refit;
 using System.Collections.Generic;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace OrlandoCodeCampApi
@@ -48,9 +47,9 @@ namespace OrlandoCodeCampApi
         [Get("/api/speakers/{speakerId}")]
         Task<Speaker> GetSpeaker(int speakerId, IncludeDetailsParameter queryParameter);
 
-        // TODO What is correct response type?
-        [Get("/api/speakers/{speakerId}/image")]
-        Task<FileWebResponse> GetSpeakerImage(int speakerId);
+        //// TODO What is correct response type?
+        //[Get("/api/speakers/{speakerId}/image")]
+        //Task<FileWebResponse> GetSpeakerImage(int speakerId);
 
         #endregion
 
@@ -62,9 +61,9 @@ namespace OrlandoCodeCampApi
         [Get("/api/sponsors/levels")]
         Task<IList<SponsorLevel>> GetSponsorLevels(EventIdParameter queryParameter);
 
-        // TODO What is correct response type?
-        [Get("/api/sponsors/{sponsorId}/image")]
-        Task<FileWebResponse> GetSponsorImage(int sponsorId);
+        //// TODO What is correct response type?
+        //[Get("/api/sponsors/{sponsorId}/image")]
+        //Task<FileWebResponse> GetSponsorImage(int sponsorId);
 
         #endregion
 

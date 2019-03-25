@@ -4,6 +4,7 @@ using Refit;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
@@ -147,7 +148,10 @@ namespace OrlandoCodeCampApi
                     IncludeDescriptions = includeDescriptions
                 };
 
-                var sessionsList = await _api.GetSessionsList(queryParameters);
+                var allSessionsList = await _api.GetSessionsList(queryParameters);
+                // TEMP Web API is not blocking unapproved sessions anymore
+                var sessionsList =
+                    allSessionsList.Where(session => session.IsApproved).ToList();
 
                 return sessionsList;
             }
@@ -195,9 +199,23 @@ namespace OrlandoCodeCampApi
                     EventId = eventId,
                     IncludeDetails = includeDetails
                 };
-                var speakersList = await _api.GetSpeakersList(queryParameters);
 
-                return speakersList;
+                // TEMP Web API is not blocking unapproved sessions anymore
+                var approvedSessionsTask = GetSessionsList();
+                var allSpeakersTask = _api.GetSpeakersList(queryParameters);
+                await Task.WhenAll(approvedSessionsTask, allSpeakersTask);
+
+                var approvedSessions = await approvedSessionsTask;
+                var approvedSpeakerIdsList =
+                    approvedSessions.Select(session => session.SpeakerId).Distinct();
+
+                var allSpeakers = await allSpeakersTask;
+                var approvedSpeakers =
+                    allSpeakers.Where(
+                            speaker => approvedSpeakerIdsList.Contains(speaker.Id))
+                        .ToList();
+
+                return approvedSpeakers;
             }
             catch (Exception exception)
             {
